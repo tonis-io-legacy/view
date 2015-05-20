@@ -31,7 +31,7 @@ final class JsonModel implements ViewModelInterface
     /**
      * @param null|string $callbackMethod
      */
-    final public function setCallbackMethod($callbackMethod)
+    public function setCallbackMethod($callbackMethod)
     {
         $this->callbackMethod = $callbackMethod;
     }
