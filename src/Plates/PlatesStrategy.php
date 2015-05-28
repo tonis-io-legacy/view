@@ -23,19 +23,36 @@ final class PlatesStrategy implements ViewStrategyInterface
     /**
      * {@inheritDoc}
      */
-    public function render($nameOrModel, array $variables = [])
+    public function render(ViewModelInterface $model)
     {
-        return $this->engine->render($nameOrModel->getTemplate(), $variables);
+        return $this->engine->render($model->getTemplate(), $model->getVariables());
     }
 
     /**
      * {@inheritDoc}
      */
-    public function canRender($nameOrModel)
+    public function canRender(ViewModelInterface $model)
     {
-        if (!$nameOrModel instanceof ViewModelInterface) {
-            return false;
+        return $this->engine->exists($model->getTemplate());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supportsAliases()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function convertAlias($template)
+    {
+        if ($template[0] == '@') {
+            $template = substr($template, 1);
+            $template = preg_replace('@[/]@', '::', $template, 1);
         }
-        return $this->engine->exists($nameOrModel->getTemplate());
+        return $template;
     }
 }

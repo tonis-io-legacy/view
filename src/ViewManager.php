@@ -28,22 +28,24 @@ final class ViewManager
     {
         $result = null;
         foreach ($this->strategies as $strategy) {
-            if (!$strategy->canRender($model)) {
-                continue;
-            }
-
             $result = $this->renderWithStrategy($strategy, $model);
 
-            if ($result instanceof \Exception) {
+            if ($result instanceof \Exception || null !== $result) {
                 break;
             }
         }
 
         if (null === $result || $result instanceof \Exception) {
-            if ($this->fallbackStrategy->canRender($model)) {
-                $result = $this->renderWithStrategy($this->fallbackStrategy, $model);
-            } else {
-                throw new \RuntimeException('Unable to render');
+            $result = $this->renderWithStrategy($this->fallbackStrategy, $model);
+
+            if (null === $result) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Unable to render model - template: "%s", variables: "%s"',
+                        $model->getTemplate(),
+                        var_export(array_keys($model->getVariables()), true)
+                    )
+                );
             }
         }
 
@@ -113,6 +115,15 @@ final class ViewManager
      */
     private function renderWithStrategy(ViewStrategyInterface $strategy, ViewModelInterface $model)
     {
+        if ($strategy->supportsAliases()) {
+            $model = clone $model;
+            $model->setTemplate($strategy->convertAlias($model->getTemplate()));
+        }
+
+        if (!$strategy->canRender($model)) {
+            return null;
+        }
+
         try {
             return $strategy->render($model);
         } catch (\Exception $ex) {
