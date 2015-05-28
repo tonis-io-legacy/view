@@ -40,7 +40,11 @@ final class ViewManager
         }
 
         if (null === $result || $result instanceof \Exception) {
-            $result = $this->renderWithStrategy($this->fallbackStrategy, $model);
+            if ($this->fallbackStrategy->canRender($model)) {
+                $result = $this->renderWithStrategy($this->fallbackStrategy, $model);
+            } else {
+                throw new \RuntimeException('Unable to render');
+            }
         }
 
         return $result;

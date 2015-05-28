@@ -3,24 +3,18 @@
 namespace Tonis\View\Twig;
 
 use Tonis\View;
+use Tonis\View\ViewModel;
 use Tonis\View\ViewModelInterface;
 use Tonis\View\ViewStrategyInterface;
 
 final class TwigStrategy implements ViewStrategyInterface
 {
-    /** \Tonis\ViewRendererInterface */
-    private $renderer;
-    /** @var \Tonis\View\ViewResolverInterface */
-    private $resolver;
+    /** @var \Twig_Environment */
+    private $twig;
 
-    /**
-     * @param \Tonis\View\Twig\TwigRenderer $renderer
-     * @param \Tonis\View\Twig\TwigResolver $resolver
-     */
-    public function __construct(TwigRenderer $renderer, TwigResolver $resolver)
+    public function __construct(\Twig_Environment $twig)
     {
-        $this->renderer = $renderer;
-        $this->resolver = $resolver;
+        $this->twig = $twig;
     }
 
     /**
@@ -28,7 +22,15 @@ final class TwigStrategy implements ViewStrategyInterface
      */
     public function render($nameOrModel, array $variables = [])
     {
-        return $this->renderer->render($nameOrModel, $variables);
+        if (!$nameOrModel instanceof ViewModelInterface) {
+            $model = new ViewModel();
+            $model->setVariables($variables);
+            $model->setTemplate($nameOrModel);
+
+            $nameOrModel = $model;
+        }
+
+        return $this->twig->render($nameOrModel->getTemplate() . '.twig', $nameOrModel->getVariables());
     }
 
     /**
@@ -41,7 +43,7 @@ final class TwigStrategy implements ViewStrategyInterface
         }
 
         try {
-            $this->resolver->resolve($nameOrModel);
+            $this->twig->loadTemplate($nameOrModel->getTemplate() . '.twig');
         } catch (\Twig_Error_Loader $e) {
             return false;
         }
