@@ -1,6 +1,8 @@
 <?php
 namespace Tonis\View;
 
+use Tonis\View\Exception\UnableToRenderException;
+
 final class Manager
 {
     /** @var string */
@@ -18,18 +20,20 @@ final class Manager
     {
         $result = null;
         foreach ($this->strategies as $strategy) {
-            $result = $this->renderWithStrategy($strategy, $model);
+            if ($strategy->canRender($model)) {
+                $result = $strategy->render($model);
+            }
 
             if (null !== $result) {
                 break;
             }
         }
 
-        if (null === $result || $result instanceof \Exception) {
-            throw new \RuntimeException(
+        if (null === $result) {
+            throw new UnableToRenderException(
                 sprintf(
-                    'Unable to render model: "%s"',
-                    var_export($model, true)
+                    'No strategy available to render model "%s"',
+                    get_class($model)
                 )
             );
         }
@@ -83,23 +87,5 @@ final class Manager
     public function getNotFoundTemplate()
     {
         return $this->notFoundTemplate;
-    }
-
-    /**
-     * @param StrategyInterface $strategy
-     * @param ModelInterface $model
-     * @return bool|string
-     */
-    private function renderWithStrategy(StrategyInterface $strategy, ModelInterface $model)
-    {
-        if (!$strategy->canRender($model)) {
-            return null;
-        }
-
-        try {
-            return $strategy->render($model);
-        } catch (\Exception $ex) {
-            return $ex;
-        }
     }
 }

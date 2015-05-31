@@ -2,8 +2,10 @@
 namespace Tonis\View;
 
 use Tonis\View\Model\StringModel;
+use Tonis\View\Model\ViewModel;
 use Tonis\View\Strategy\JsonStrategy;
 use Tonis\View\Strategy\StringStrategy;
+use Tonis\View\TestAsset\ExceptionStrategy;
 
 /**
  * @coversDefaultClass Tonis\View\Manager
@@ -19,10 +21,11 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddStrategy()
     {
-        $this->vm->addStrategy(new JsonStrategy());
-        $this->vm->addStrategy(new StringStrategy());
+        $vm = new Manager();
+        $vm->addStrategy(new JsonStrategy());
+        $vm->addStrategy(new StringStrategy());
 
-        $this->assertCount(3, $this->vm->getStrategies());
+        $this->assertCount(2, $vm->getStrategies());
     }
 
     /**
@@ -53,13 +56,23 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $model = new StringModel('foo');
-
         $this->assertSame('foo', $this->vm->render($model));
+    }
+
+    /**
+     * @covers ::render
+     * @expectedException \Tonis\View\Exception\UnableToRenderException
+     * @expectedExceptionMessage No strategy available to render model "Tonis\View\Model\ViewModel"
+     */
+    public function testRenderWithNoResult()
+    {
+        $this->vm->render(new ViewModel('foo'));
     }
 
     protected function setUp()
     {
         $this->vm = new Manager();
+        $this->vm->addStrategy(new JsonStrategy());
         $this->vm->addStrategy(new StringStrategy());
     }
 }
