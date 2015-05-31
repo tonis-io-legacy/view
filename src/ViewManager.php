@@ -13,14 +13,6 @@ final class ViewManager
     private $strategies = [];
 
     /**
-     * @param ViewStrategyInterface $strategy
-     */
-    public function addStrategy(ViewStrategyInterface $strategy)
-    {
-        $this->strategies[] = $strategy;
-    }
-
-    /**
      * @param ViewModelInterface $model
      * @return string
      */
@@ -50,6 +42,22 @@ final class ViewManager
         }
 
         return $result;
+    }
+
+    /**
+     * @param ViewStrategyInterface $strategy
+     */
+    public function addStrategy(ViewStrategyInterface $strategy)
+    {
+        $this->strategies[] = $strategy;
+    }
+
+    /**
+     * @return ViewStrategyInterface[]
+     */
+    public function getStrategies()
+    {
+        return $this->strategies;
     }
 
     /**
@@ -98,14 +106,6 @@ final class ViewManager
     public function getNotFoundTemplate()
     {
         return $this->notFoundTemplate;
-    }
-
-    /**
-     * @return ViewStrategyInterface[]
-     */
-    public function getStrategies()
-    {
-        return $this->strategies;
     }
 
     /**
