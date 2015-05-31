@@ -20,12 +20,12 @@ final class Manager
         foreach ($this->strategies as $strategy) {
             $result = $this->renderWithStrategy($strategy, $model);
 
-            if (!$this->isInvalidResult($result)) {
+            if (null !== $result) {
                 break;
             }
         }
 
-        if ($this->isInvalidResult($result)) {
+        if (null === $result || $result instanceof \Exception) {
             throw new \RuntimeException(
                 sprintf(
                     'Unable to render model: "%s"',
@@ -83,15 +83,6 @@ final class Manager
     public function getNotFoundTemplate()
     {
         return $this->notFoundTemplate;
-    }
-
-    /**
-     * @param mixed $result
-     * @return bool
-     */
-    private function isInvalidResult($result)
-    {
-        return $result instanceof \Exception || null !== $result;
     }
 
     /**

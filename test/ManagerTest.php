@@ -1,6 +1,7 @@
 <?php
 namespace Tonis\View;
 
+use Tonis\View\Model\StringModel;
 use Tonis\View\Strategy\JsonStrategy;
 use Tonis\View\Strategy\StringStrategy;
 
@@ -21,7 +22,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $this->vm->addStrategy(new JsonStrategy());
         $this->vm->addStrategy(new StringStrategy());
 
-        $this->assertCount(2, $this->vm->getStrategies());
+        $this->assertCount(3, $this->vm->getStrategies());
     }
 
     /**
@@ -51,11 +52,14 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
+        $model = new StringModel('foo');
 
+        $this->assertSame('foo', $this->vm->render($model));
     }
 
     protected function setUp()
     {
         $this->vm = new Manager();
+        $this->vm->addStrategy(new StringStrategy());
     }
 }
