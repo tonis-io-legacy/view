@@ -45,6 +45,7 @@ class TwigStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::__construct
      * @covers ::render
      */
     public function testRender()
