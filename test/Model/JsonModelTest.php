@@ -1,9 +1,8 @@
 <?php
- 
-namespace Tonis\View\Json;
+namespace Tonis\View\Model;
 
 /**
- * @coversDefaultClass \Tonis\View\Json\JsonModel
+ * @coversDefaultClass \Tonis\View\Model\JsonModel
  */
 class JsonModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,11 +13,11 @@ class JsonModelTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsJsonP()
     {
-        $m = new JsonModel();
+        $m = new JsonModel([]);
         $this->assertFalse($m->isJsonP());
-        
-        $m->setCallbackMethod('foo');
-        
+
+        $m = new JsonModel([], 'foo');
+
         $this->assertTrue($m->isJsonP());
         $this->assertSame('foo', $m->getCallbackMethod());
     }

@@ -1,11 +1,12 @@
 <?php
 
-namespace Tonis\View\Twig;
+namespace Tonis\View\Strategy;
 
-use Tonis\View\ViewModelInterface;
-use Tonis\View\ViewStrategyInterface;
+use Tonis\View\Model\ViewModel;
+use Tonis\View\ModelInterface;
+use Tonis\View\StrategyInterface;
 
-final class TwigStrategy implements ViewStrategyInterface
+final class TwigStrategy implements StrategyInterface
 {
     /** @var \Twig_Environment */
     private $twig;
@@ -25,37 +26,29 @@ final class TwigStrategy implements ViewStrategyInterface
     /**
      * {@inheritDoc}
      */
-    public function render(ViewModelInterface $model)
+    public function render(ModelInterface $model)
     {
+        if (!$model instanceof ViewModel) {
+            return '';
+        }
+
         return $this->twig->render($model->getTemplate() . $this->suffix, $model->getVariables());
     }
 
     /**
      * {@inheritDoc}
      */
-    public function canRender(ViewModelInterface $model)
+    public function canRender(ModelInterface $model)
     {
+        if (!$model instanceof ViewModel) {
+            return false;
+        }
+
         try {
             $this->twig->getLoader()->getSource($model->getTemplate() . $this->suffix);
         } catch (\Twig_Error_Loader $e) {
             return false;
         }
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function supportsAliases()
-    {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function convertAlias($template)
-    {
-        throw new \RuntimeException('TwigStrategy is compatible with Tonis\View aliases');
     }
 }

@@ -1,14 +1,15 @@
 <?php
 namespace Tonis\View;
-use Tonis\View\Json\JsonStrategy;
-use Tonis\View\String\StringStrategy;
+
+use Tonis\View\Strategy\JsonStrategy;
+use Tonis\View\Strategy\StringStrategy;
 
 /**
- * @coversDefaultClass Tonis\View\ViewManager
+ * @coversDefaultClass Tonis\View\Manager
  */
-class ViewManagerTest extends \PHPUnit_Framework_TestCase
+class ManagerTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var ViewManager */
+    /** @var Manager */
     private $vm;
 
     /**
@@ -21,17 +22,6 @@ class ViewManagerTest extends \PHPUnit_Framework_TestCase
         $this->vm->addStrategy(new StringStrategy());
 
         $this->assertCount(2, $this->vm->getStrategies());
-    }
-
-    /**
-     * @covers ::setFallbackStrategy
-     * @covers ::getFallbackStrategy
-     */
-    public function testSetGetFallbackStrategy()
-    {
-        $fallback = new StringStrategy();
-        $this->vm->setFallbackStrategy($fallback);
-        $this->assertSame($fallback, $this->vm->getFallbackStrategy());
     }
 
     /**
@@ -66,6 +56,6 @@ class ViewManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->vm = new ViewManager();
+        $this->vm = new Manager();
     }
 }

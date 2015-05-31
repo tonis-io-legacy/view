@@ -1,6 +1,5 @@
 <?php
-
-namespace Tonis\View;
+namespace Tonis\View\Model;
 
 /**
  * @coversDefaultClass \Tonis\View\ViewModelTrait
@@ -13,7 +12,7 @@ class ViewModelTraitTest extends \PHPUnit_Framework_TestCase
     public function testVarsSetOnConstruction()
     {
         $vars = ['foo' => 'bar', 'baz' => 'boo'];
-        $model = new ViewModel($vars);
+        $model = new ViewModel('template', $vars);
         $this->assertSame($vars, $model->getVariables());
     }
 
@@ -24,8 +23,7 @@ class ViewModelTraitTest extends \PHPUnit_Framework_TestCase
     public function testGetSetTemplate()
     {
         $template = 'foo';
-        $model = new ViewModel();
-        $model->setTemplate($template);
+        $model = new ViewModel($template);
 
         $this->assertSame($template, $model->getTemplate());
     }
@@ -37,22 +35,8 @@ class ViewModelTraitTest extends \PHPUnit_Framework_TestCase
     public function testGetSetVariables()
     {
         $variables = ['foo' => 'bar'];
-        $model = new ViewModel();
-        $model->setVariables($variables);
+        $model = new ViewModel('foo', $variables);
 
         $this->assertSame($variables, $model->getVariables());
-    }
-
-    /**
-     * @covers ::getOptions
-     * @covers ::setOptions
-     */
-    public function testGetSetOptions()
-    {
-        $options = ['foo' => 'bar'];
-        $model = new ViewModel();
-        $model->setOptions($options);
-
-        $this->assertSame($options, $model->getOptions());
     }
 }
