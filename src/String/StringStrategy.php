@@ -12,7 +12,9 @@ final class StringStrategy implements ViewStrategyInterface
      */
     public function render(ViewModelInterface $model)
     {
-        return $model->getVariables()['content'];
+        $variables = $model->getVariables();
+
+        return isset($variables['content']) ? $variables['content'] : '';
     }
 
     /**
@@ -40,6 +42,6 @@ final class StringStrategy implements ViewStrategyInterface
      */
     public function convertAlias($template)
     {
-        throw new \RuntimeException('StringStraetgy does not support aliases');
+        throw new \RuntimeException('StringStrategy does not support aliases');
     }
 }
