@@ -3,7 +3,7 @@ namespace Tonis\View\Model;
 
 use Tonis\View\ModelInterface;
 
-class StringModel implements ModelInterface
+final class StringModel implements ModelInterface
 {
     /** @var string */
     private $string;

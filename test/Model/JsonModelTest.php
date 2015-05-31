@@ -7,6 +7,7 @@ namespace Tonis\View\Model;
 class JsonModelTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @covers ::__construct
      * @covers ::isJsonP
      * @covers ::getCallbackMethod
      */
@@ -19,5 +20,16 @@ class JsonModelTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($m->isJsonP());
         $this->assertSame('foo', $m->getCallbackMethod());
+    }
+
+    /**
+     * @covers ::getData
+     */
+    public function testGetData()
+    {
+        $data = ['foo' => 'bar'];
+
+        $m = new JsonModel($data);
+        $this->assertSame($data, $m->getData());
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Tonis\View\Strategy;
 
+use Tonis\View\Model\JsonModel;
 use Tonis\View\Model\ViewModel;
 
 /**
@@ -16,11 +17,22 @@ class TwigStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testCanRender()
     {
+        $model = new JsonModel([]);
+        $this->assertFalse($this->s->canRender($model));
+
         $model = new ViewModel('does-not-exist');
         $this->assertFalse($this->s->canRender($model));
 
         $model = new ViewModel('test');
         $this->assertTrue($this->s->canRender($model));
+    }
+
+    /**
+     * @covers ::render
+     */
+    public function testRenderWithInvalidModel()
+    {
+        $this->assertSame('', $this->s->render(new JsonModel([])));
     }
 
     /**

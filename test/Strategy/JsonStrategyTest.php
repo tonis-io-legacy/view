@@ -1,6 +1,7 @@
 <?php
 namespace Tonis\View\Strategy;
 
+use Tonis\View\Model\StringModel;
 use Tonis\View\Model\ViewModel;
 use Tonis\View\Model\JsonModel;
 
@@ -17,6 +18,15 @@ class JsonStrategyTest extends \PHPUnit_Framework_TestCase
         $s = new JsonStrategy();
         $this->assertFalse($s->canRender(new ViewModel('foo')));
         $this->assertTrue($s->canRender(new JsonModel([])));
+    }
+
+    /**
+     * @covers ::render
+     */
+    public function testRenderWithInvalidModel()
+    {
+        $s = new JsonStrategy();
+        $this->assertSame('{}', $s->render(new StringModel('')));
     }
 
     /**

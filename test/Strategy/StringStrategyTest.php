@@ -27,6 +27,14 @@ class StringStrategyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers ::render
      */
+    public function testRenderWithInvalidModel()
+    {
+        $this->assertSame('', $this->s->render(new ViewModel('')));
+    }
+
+    /**
+     * @covers ::render
+     */
     public function testRender()
     {
         $m = new StringModel('bar');
