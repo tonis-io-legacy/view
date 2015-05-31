@@ -3,9 +3,9 @@
 namespace Tonis\View;
 
 /**
- * @coversDefaultClass \Tonis\View\ModelTrait
+ * @coversDefaultClass \Tonis\View\ViewModelTrait
  */
-class ModelTraitTest extends \PHPUnit_Framework_TestCase
+class ViewModelTraitTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers ::__construct
@@ -18,7 +18,8 @@ class ModelTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::getTemplate, ::setTemplate
+     * @covers ::getTemplate
+     * @covers ::setTemplate
      */
     public function testGetSetTemplate()
     {
@@ -30,7 +31,8 @@ class ModelTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::getVariables, ::setVariables
+     * @covers ::getVariables
+     * @covers ::setVariables
      */
     public function testGetSetVariables()
     {
@@ -42,7 +44,8 @@ class ModelTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::getOptions, ::setOptions
+     * @covers ::getOptions
+     * @covers ::setOptions
      */
     public function testGetSetOptions()
     {

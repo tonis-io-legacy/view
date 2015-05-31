@@ -1,6 +1,6 @@
 <?php
 
-namespace Tonis\Json;
+namespace Tonis\View\Json;
 
 use Tonis\View\ViewModelInterface;
 use Tonis\View\ViewModelTrait;

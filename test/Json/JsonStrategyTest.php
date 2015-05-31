@@ -1,9 +1,10 @@
 <?php
 
-namespace Tonis\View;
+namespace Tonis\View\Json;
+use Tonis\View\ViewModel;
 
 /**
- * @coversDefaultClass \Tonis\View\JsonStrategy
+ * @coversDefaultClass \Tonis\View\Json\JsonStrategy
  */
 class JsonStrategyTest extends \PHPUnit_Framework_TestCase 
 {
@@ -13,9 +14,28 @@ class JsonStrategyTest extends \PHPUnit_Framework_TestCase
     public function testCanRender()
     {
         $s = new JsonStrategy();
-        $this->assertFalse($s->canRender('foo'));
-        $this->assertFalse($s->canRender(null));
+        $this->assertFalse($s->canRender(new ViewModel()));
         $this->assertTrue($s->canRender(new JsonModel()));
+    }
+
+    /**
+     * @covers ::supportsAliases
+     */
+    public function testSupportsAliases()
+    {
+        $s = new JsonStrategy();
+        $this->assertSame(false, $s->supportsAliases());
+    }
+
+    /**
+     * @covers ::convertAlias
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage JsonStrategy does not support aliases
+     */
+    public function testConvertAlias()
+    {
+        $s = new JsonStrategy();
+        $s->convertAlias(null);
     }
 
     /**
@@ -39,14 +59,5 @@ class JsonStrategyTest extends \PHPUnit_Framework_TestCase
         $m = new JsonModel(['foo' => 'bar']);
 
         $this->assertSame(json_encode(['foo' => 'bar']), $s->render($m));
-    }
-
-    /**
-     * @covers ::render
-     */
-    public function testRenderWithoutJsonModel()
-    {
-        $s = new JsonStrategy();
-        $this->assertSame(json_encode(['foo' => 'bar']), $s->render(null, ['foo' => 'bar']));
     }
 }

@@ -28,7 +28,7 @@ final class StringStrategy implements ViewStrategyInterface
     }
 
     /**
-     * @return bool
+     * {@inheritDoc}
      */
     public function supportsAliases()
     {
@@ -36,8 +36,7 @@ final class StringStrategy implements ViewStrategyInterface
     }
 
     /**
-     * @param ViewModelInterface $template
-     * @return string
+     * {@inheritDoc}
      */
     public function convertAlias($template)
     {

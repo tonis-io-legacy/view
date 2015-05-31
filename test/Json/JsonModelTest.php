@@ -1,14 +1,16 @@
 <?php
  
-namespace Tonis\View;
+namespace Tonis\View\Json;
 
 /**
- * @coversDefaultClass \Tonis\View\JsonModel
+ * @coversDefaultClass \Tonis\View\Json\JsonModel
  */
 class JsonModelTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers ::isJsonP, ::setCallbackMethod, ::getCallbackMethod
+     * @covers ::isJsonP
+     * @covers ::setCallbackMethod
+     * @covers ::getCallbackMethod
      */
     public function testIsJsonP()
     {

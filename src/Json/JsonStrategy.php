@@ -1,7 +1,8 @@
 <?php
 
-namespace Tonis\Json;
+namespace Tonis\View\Json;
 
+use Tonis\View\ViewModelInterface;
 use Tonis\View\ViewStrategyInterface;
 
 final class JsonStrategy implements ViewStrategyInterface
@@ -9,30 +10,44 @@ final class JsonStrategy implements ViewStrategyInterface
     /**
      * {@inheritDoc}
      */
-    public function canRender($nameOrModel)
+    public function canRender(ViewModelInterface $model)
     {
-        return $nameOrModel instanceof JsonModel;
+        return $model instanceof JsonModel;
     }
 
     /**
-     * @param JsonModel|string $nameOrModel
-     * @param array $variables
-     * @return string
+     * {@inheritDoc}
      */
-    public function render($nameOrModel, array $variables = [])
+    public function render(ViewModelInterface $model, array $variables = [])
     {
         $isJsonP = false;
-        if ($nameOrModel instanceof JsonModel) {
-            $variables = array_merge($variables, $nameOrModel->getVariables());
-            $isJsonP = $nameOrModel->isJsonP();
+        if ($model instanceof JsonModel) {
+            $variables = array_merge($variables, $model->getVariables());
+            $isJsonP = $model->isJsonP();
         }
 
         $result = json_encode($variables);
 
         if ($isJsonP) {
-            $result = sprintf('%s(%s);', $nameOrModel->getCallbackMethod(), $result);
+            $result = sprintf('%s(%s);', $model->getCallbackMethod(), $result);
         }
 
         return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supportsAliases()
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function convertAlias($template)
+    {
+        throw new \RuntimeException('JsonStrategy does not support aliases');
     }
 }
