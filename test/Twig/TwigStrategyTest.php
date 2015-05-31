@@ -1,16 +1,15 @@
 <?php
 
-namespace Tonis\View\Plates;
+namespace Tonis\View\Twig;
 
-use League\Plates\Engine;
 use Tonis\View\ViewModel;
 
 /**
- * @coversDefaultClass \Tonis\View\Plates\PlatesStrategy
+ * @coversDefaultClass \Tonis\View\Twig\TwigStrategy
  */
-class PlatesStrategyTest extends \PHPUnit_Framework_TestCase 
+class TwigStrategyTest extends \PHPUnit_Framework_TestCase 
 {
-    /** @var PlatesStrategy */
+    /** @var TwigStrategy */
     private $s;
 
     /**
@@ -32,11 +31,13 @@ class PlatesStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testSupportsAliases()
     {
-        $this->assertSame(true, $this->s->supportsAliases());
+        $this->assertSame(false, $this->s->supportsAliases());
     }
 
     /**
      * @covers ::convertAlias
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage TwigStrategy is compatible with Tonis\View aliases
      */
     public function testConvertAlias()
     {
@@ -44,7 +45,6 @@ class PlatesStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers ::__construct
      * @covers ::render
      */
     public function testRender()
@@ -52,11 +52,13 @@ class PlatesStrategyTest extends \PHPUnit_Framework_TestCase
         $m = new ViewModel(['foo' => 'bar']);
         $m->setTemplate('variables');
 
-        $this->assertSame('bar', $this->s->render($m));
+        $this->assertSame("bar\n", $this->s->render($m));
     }
 
     protected function setUp()
     {
-        $this->s = new PlatesStrategy(new Engine(__DIR__ . '/../_view'));
+        $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../_view');
+        $twig = new \Twig_Environment($loader);
+        $this->s = new TwigStrategy($twig);
     }
 }

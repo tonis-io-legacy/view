@@ -48,7 +48,7 @@ final class TwigStrategy implements ViewStrategyInterface
      */
     public function supportsAliases()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -56,6 +56,6 @@ final class TwigStrategy implements ViewStrategyInterface
      */
     public function convertAlias($template)
     {
-        return $template;
+        throw new \RuntimeException('TwigStrategy is compatible with Tonis\View aliases');
     }
 }
