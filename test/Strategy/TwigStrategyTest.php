@@ -4,7 +4,7 @@ namespace Tonis\View\Strategy;
 use Tonis\View\Model\ViewModel;
 
 /**
- * @coversDefaultClass \Tonis\View\Twig\TwigStrategy
+ * @coversDefaultClass \Tonis\View\Strategy\TwigStrategy
  */
 class TwigStrategyTest extends \PHPUnit_Framework_TestCase 
 {

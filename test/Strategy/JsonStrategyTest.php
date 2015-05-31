@@ -5,7 +5,7 @@ use Tonis\View\Model\ViewModel;
 use Tonis\View\Model\JsonModel;
 
 /**
- * @coversDefaultClass \Tonis\View\Json\JsonStrategy
+ * @coversDefaultClass \Tonis\View\Strategy\JsonStrategy
  */
 class JsonStrategyTest extends \PHPUnit_Framework_TestCase 
 {

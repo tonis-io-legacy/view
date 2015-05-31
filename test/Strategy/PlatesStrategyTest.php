@@ -5,7 +5,7 @@ use League\Plates\Engine;
 use Tonis\View\Model\ViewModel;
 
 /**
- * @coversDefaultClass \Tonis\View\Plates\PlatesStrategy
+ * @coversDefaultClass \Tonis\View\Strategy\PlatesStrategy
  */
 class PlatesStrategyTest extends \PHPUnit_Framework_TestCase 
 {

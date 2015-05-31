@@ -5,7 +5,7 @@ use Tonis\View\Model\StringModel;
 use Tonis\View\Model\ViewModel;
 
 /**
- * @coversDefaultClass \Tonis\View\String\StringStrategy
+ * @coversDefaultClass \Tonis\View\Strategy\StringStrategy
  */
 class StringStrategyTest extends \PHPUnit_Framework_TestCase 
 {

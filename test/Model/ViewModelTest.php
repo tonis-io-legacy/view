@@ -2,7 +2,7 @@
 namespace Tonis\View\Model;
 
 /**
- * @coversDefaultClass \Tonis\View\ViewModelTrait
+ * @coversDefaultClass \Tonis\View\Model\ViewModel
  */
 class ViewModelTraitTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,9 +18,8 @@ class ViewModelTraitTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::getTemplate
-     * @covers ::setTemplate
      */
-    public function testGetSetTemplate()
+    public function testGetTemplate()
     {
         $template = 'foo';
         $model = new ViewModel($template);
@@ -30,9 +29,8 @@ class ViewModelTraitTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::getVariables
-     * @covers ::setVariables
      */
-    public function testGetSetVariables()
+    public function testGetVariables()
     {
         $variables = ['foo' => 'bar'];
         $model = new ViewModel('foo', $variables);

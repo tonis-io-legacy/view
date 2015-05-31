@@ -8,7 +8,6 @@ class JsonModelTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers ::isJsonP
-     * @covers ::setCallbackMethod
      * @covers ::getCallbackMethod
      */
     public function testIsJsonP()
