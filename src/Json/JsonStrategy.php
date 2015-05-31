@@ -18,17 +18,11 @@ final class JsonStrategy implements ViewStrategyInterface
     /**
      * {@inheritDoc}
      */
-    public function render(ViewModelInterface $model, array $variables = [])
+    public function render(ViewModelInterface $model)
     {
-        $isJsonP = false;
-        if ($model instanceof JsonModel) {
-            $variables = array_merge($variables, $model->getVariables());
-            $isJsonP = $model->isJsonP();
-        }
+        $result = json_encode($model->getVariables());
 
-        $result = json_encode($variables);
-
-        if ($isJsonP) {
+        if ($model instanceof JsonModel && $model->isJsonP()) {
             $result = sprintf('%s(%s);', $model->getCallbackMethod(), $result);
         }
 
