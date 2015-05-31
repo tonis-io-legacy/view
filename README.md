@@ -14,3 +14,5 @@ Additionally, you can download or clone the repository and setup your own autolo
 ## Information
 
 This library does little on it's own. It's intended to be used as a compatability layer for various templating engines.
+
+Testing.
