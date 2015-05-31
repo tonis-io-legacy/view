@@ -19,4 +19,4 @@ script:
     - vendor/bin/phpcs --standard=PSR2 -s -p src/
 
 after_script:
-    - vendor/bin/ocular code-coverage:upload --format=php-clover ./build/clover.xml
+    - vendor/bin/ocular code-coverage:upload build/clover.xml --format=php-clover
