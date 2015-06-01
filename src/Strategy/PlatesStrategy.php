@@ -28,7 +28,6 @@ final class PlatesStrategy implements StrategyInterface
         if (!$model instanceof ViewModel) {
             return '';
         }
-
         return $this->engine->render($this->convertTemplate($model->getTemplate()), $model->getVariables());
     }
 
