@@ -29,13 +29,7 @@ final class PlatesStrategy implements StrategyInterface
             return '';
         }
 
-        $template = $model->getTemplate();
-        if ($template[0] == '@') {
-            $template = substr($template, 1);
-            $template = preg_replace('@[/]@', '::', $template, 1);
-        }
-
-        return $this->engine->render($template, $model->getVariables());
+        return $this->engine->render($this->convertTemplate($model->getTemplate()), $model->getVariables());
     }
 
     /**
@@ -46,6 +40,19 @@ final class PlatesStrategy implements StrategyInterface
         if (!$model instanceof ViewModel) {
             return false;
         }
-        return $this->engine->exists($model->getTemplate());
+        return $this->engine->exists($this->convertTemplate($model->getTemplate()));
+    }
+
+    /**
+     * @param string $template
+     * @return string
+     */
+    private function convertTemplate($template)
+    {
+        if ($template[0] == '@') {
+            $template = substr($template, 1);
+            $template = preg_replace('@[/]@', '::', $template, 1);
+        }
+        return $template;
     }
 }
