@@ -30,6 +30,7 @@ class PlatesStrategyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::render
+     * @covers ::convertTemplate
      */
     public function testRenderWithInvalidModel()
     {
@@ -38,6 +39,7 @@ class PlatesStrategyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::render
+     * @covers ::convertTemplate
      */
     public function testRenderConvertsAliases()
     {
@@ -48,6 +50,7 @@ class PlatesStrategyTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers ::__construct
      * @covers ::render
+     * @covers ::convertTemplate
      */
     public function testRender()
     {
