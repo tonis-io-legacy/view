@@ -23,7 +23,16 @@
     },
     "autoload": {
         "psr-4": {
-            "Tonis\\View\\": ["src/", "test/"]
+            "Tonis\\View\\": [
+                "src/"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tonis\\View\\": [
+                "test/"
+            ]
         }
     },
     "extra": {
