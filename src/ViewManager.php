@@ -1,9 +1,7 @@
 <?php
 namespace Tonis\View;
 
-use Tonis\View\Exception\UnableToRenderException;
-
-final class Manager
+final class ViewManager
 {
     /** @var string */
     private $errorTemplate = 'error/exception';
@@ -30,7 +28,7 @@ final class Manager
         }
 
         if (null === $result) {
-            throw new UnableToRenderException(
+            throw new Exception\UnableToRenderException(
                 sprintf(
                     'No strategy available to render model "%s"',
                     get_class($model)

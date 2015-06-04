@@ -24,6 +24,14 @@ final class TwigStrategy implements StrategyInterface
     }
 
     /**
+     * @return \Twig_Environment
+     */
+    public function getTwig()
+    {
+        return $this->twig;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function render(ModelInterface $model)

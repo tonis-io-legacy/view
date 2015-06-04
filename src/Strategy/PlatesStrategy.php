@@ -21,6 +21,14 @@ final class PlatesStrategy implements StrategyInterface
     }
 
     /**
+     * @return Engine
+     */
+    public function getEngine()
+    {
+        return $this->engine;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function render(ModelInterface $model)
