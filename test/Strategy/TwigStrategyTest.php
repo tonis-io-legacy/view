@@ -13,6 +13,14 @@ class TwigStrategyTest extends \PHPUnit_Framework_TestCase
     private $s;
 
     /**
+     * @covers ::getTwig
+     */
+    public function testGetTwig()
+    {
+        $this->assertInstanceOf(\Twig_Environment::class, $this->s->getTwig());
+    }
+
+    /**
      * @covers ::canRender
      */
     public function testCanRender()
