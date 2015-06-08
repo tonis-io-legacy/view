@@ -8,11 +8,11 @@ use Tonis\View\Strategy\StringStrategy;
 use Tonis\View\TestAsset\ExceptionStrategy;
 
 /**
- * @coversDefaultClass Tonis\View\Manager
+ * @coversDefaultClass Tonis\View\ViewManager
  */
 class ManagerTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var Manager */
+    /** @var ViewManager */
     private $vm;
 
     /**
@@ -21,7 +21,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddStrategy()
     {
-        $vm = new Manager();
+        $vm = new ViewManager();
         $vm->addStrategy(new JsonStrategy());
         $vm->addStrategy(new StringStrategy());
 
@@ -71,7 +71,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->vm = new Manager();
+        $this->vm = new ViewManager();
         $this->vm->addStrategy(new JsonStrategy());
         $this->vm->addStrategy(new StringStrategy());
     }

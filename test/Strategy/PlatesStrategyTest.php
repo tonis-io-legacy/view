@@ -14,6 +14,14 @@ class PlatesStrategyTest extends \PHPUnit_Framework_TestCase
     private $s;
 
     /**
+     * @covers ::getEngine
+     */
+    public function testGetEngine()
+    {
+        $this->assertInstanceOf(Engine::class, $this->s->getEngine());
+    }
+
+    /**
      * @covers ::canRender
      */
     public function testCanRender()
