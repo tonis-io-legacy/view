@@ -9,6 +9,16 @@ final class ViewManager
     private $notFoundTemplate = 'error/404';
     /** @var StrategyInterface[] */
     private $strategies = [];
+    /** @var StrategyInterface */
+    private $fallbackStrategy;
+
+    /**
+     * @param StrategyInterface $fallbackStrategy
+     */
+    public function __construct(StrategyInterface $fallbackStrategy)
+    {
+        $this->fallbackStrategy = $fallbackStrategy;
+    }
 
     /**
      * @param ModelInterface $model
@@ -28,12 +38,7 @@ final class ViewManager
         }
 
         if (null === $result) {
-            throw new Exception\UnableToRenderException(
-                sprintf(
-                    'No strategy available to render model "%s"',
-                    get_class($model)
-                )
-            );
+            $result = $this->fallbackStrategy->render($model);
         }
 
         return $result;
